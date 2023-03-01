@@ -19,7 +19,7 @@ namespace Server
 
                 Socket listener = socket.Accept();
                 Console.WriteLine(listener.RemoteEndPoint.ToString());
-                listener.Send(Encoding.UTF8.GetBytes("Здравствуй, пользователь."));
+                listener.Send(Encoding.UTF8.GetBytes("Здравствуй, пользователь.\n"));
                 listener.Send(Encoding.UTF8.GetBytes("А у меня сейчас" + DateTime.Now.ToString()));
                 listener.Shutdown(SocketShutdown.Both);
                 listener.Close();
