@@ -56,6 +56,7 @@
             this.btn_sendMessage.TabIndex = 1;
             this.btn_sendMessage.Text = "отправить сообщение";
             this.btn_sendMessage.UseVisualStyleBackColor = true;
+            this.btn_sendMessage.Click += new System.EventHandler(this.btn_sendMessage_Click);
             // 
             // btn_SwitchContact
             // 

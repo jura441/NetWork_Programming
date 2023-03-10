@@ -6,9 +6,9 @@ namespace Server_Forms
 {
     public partial class Form1 : Form
     {
-        Socket? server;
-        IPEndPoint? point;
-        bool runServer;
+        Socket server;
+        IPEndPoint point;
+        
         public Form1()
         {
             InitializeComponent();
@@ -23,6 +23,10 @@ namespace Server_Forms
 
         private void btn_startserver_Click(object sender, EventArgs e)
         {
+            if(server == null)
+                return;
+            server.Bind(point);
+            server.Listen(100);
            tmr_refreshConnection.Start();
             
         }
@@ -38,18 +42,9 @@ namespace Server_Forms
             {
                 server.Bind(point);
                 server.Listen(100);
-                runServer = true;
+                
 
-                server.BeginAccept((IAsyncResult result) =>
-                {
-                    if (result != null)
-                    {
-                        Socket clientsocket = server.EndAccept(result);
-                        rtb_clients.Text += clientsocket.RemoteEndPoint.ToString();
-                        clientsocket.Send(Encoding.UTF8.GetBytes("Успешное подключение."));
-                        //server.Shutdown(SocketShutdown.Both);
-                    }
-                }, server);
+                server.BeginAccept(ServerAcceptDelegate, server);
 
                     /*ArraySegment<byte> buffer = new ArraySegment<byte>();
                     client.SendAsync(buffer, SocketFlags.None);
@@ -64,6 +59,26 @@ namespace Server_Forms
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+        void ServerAcceptDelegate(IAsyncResult result)
+        {
+            if (result != null)
+            {
+                Socket serv = (Socket)result.AsyncState;
+                Socket clientsocket = server.EndAccept(result);
+                IAsyncResult updateText = rtb_clients.BeginInvoke(RichTextBoxOutputDelegate, clientsocket.RemoteEndPoint.ToString());
+                rtb_clients.EndInvoke(updateText);
+                
+                clientsocket.Send(Encoding.UTF8.GetBytes("Успешное подключение."));
+                clientsocket.Shutdown(SocketShutdown.Send);
+                clientsocket.Close();
+                serv.BeginAccept(ServerAcceptDelegate, serv);
+            }
+        }
+        void RichTextBoxOutputDelegate(object obj)
         {
 
         }
