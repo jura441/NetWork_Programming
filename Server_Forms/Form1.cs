@@ -23,44 +23,50 @@ namespace Server_Forms
 
         private void btn_startserver_Click(object sender, EventArgs e)
         {
-            if(server == null)
-                return;
-            server.Bind(point);
-            server.Listen(100);
-           tmr_refreshConnection.Start();
+            if (server != null)
+            {
+                server.Bind(point);
+                server.Listen(100);
+                tmr_refreshConnection.Start();
+            }
             
         }
 
         private void btn_stopserver_Click(object sender, EventArgs e)
         {
-           tmr_refreshConnection.Stop();
+            try
+            {
+                if (server != null)
+                    tmr_refreshConnection.Stop();
+                server.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void tmr_refreshConnection_Tick(object sender, EventArgs e)
         {
             try
             {
-                server.Bind(point);
-                server.Listen(100);
-                
-
                 server.BeginAccept(ServerAcceptDelegate, server);
-
-                    /*ArraySegment<byte> buffer = new ArraySegment<byte>();
-                    client.SendAsync(buffer, SocketFlags.None);
-                    Thread.Sleep(100);*/
-                    
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            
         }
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            try
+            {
+                server.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         void ServerAcceptDelegate(IAsyncResult result)
@@ -69,18 +75,27 @@ namespace Server_Forms
             {
                 Socket serv = (Socket)result.AsyncState;
                 Socket clientsocket = server.EndAccept(result);
+                clientsocket.Send(Encoding.UTF8.GetBytes("Успешное подключение."));
+
                 IAsyncResult updateText = rtb_clients.BeginInvoke(RichTextBoxOutputDelegate, clientsocket.RemoteEndPoint.ToString());
                 rtb_clients.EndInvoke(updateText);
-                
-                clientsocket.Send(Encoding.UTF8.GetBytes("Успешное подключение."));
+
+                byte[] buffer = new byte[1024];
+                ArraySegment<byte> segment = new ArraySegment<byte>(buffer, 0, buffer.Length);
+                Task<int> answer = clientsocket.ReceiveAsync(segment, SocketFlags.None);
+                if (answer.IsCompleted)
+                {
+                    updateText = rtb_clients.BeginInvoke(RichTextBoxOutputDelegate, Encoding.UTF8.GetString(segment));
+                    rtb_clients.EndInvoke(updateText);
+                }
+
                 clientsocket.Shutdown(SocketShutdown.Send);
                 clientsocket.Close();
-                serv.BeginAccept(ServerAcceptDelegate, serv);
             }
         }
         void RichTextBoxOutputDelegate(object obj)
         {
-
+            rtb_clients.Text += (string)obj;
         }
     }
 }

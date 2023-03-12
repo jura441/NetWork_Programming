@@ -6,8 +6,8 @@ namespace Async
 {
     public partial class Клиент : Form
     {
-        Socket? client;
-        IPEndPoint? point;
+        Socket client;
+        IPEndPoint point;
         public Клиент()
         {
             InitializeComponent();
@@ -42,20 +42,42 @@ namespace Async
             }
 
         }
-        private void btn_SwitchContact_Click(object sender, EventArgs e)
+        private void btn_disconnectServer_Click(object sender, EventArgs e)
         {
             if(client != null)
             {
                 client.Shutdown(SocketShutdown.Both);
                 client.Close();
             }
+
+        }
+        private void btn_SwitchContact_Click(object sender, EventArgs e)
+        {
         }
 
         private void btn_sendMessage_Click(object sender, EventArgs e)
         {
-            byte[] buffer = Encoding.UTF8.GetBytes(textBox1.Text);
+            try
+            {
+                client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+                point = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 80);
+                client.BeginConnect(point, (IAsyncResult result) => {
+                    Socket clientAsync = (Socket)result.AsyncState;
+                    if (clientAsync.Connected)
+                    {
+                        byte[] buffer = Encoding.UTF8.GetBytes(textBox1.Text);
             ArraySegment<byte> segment = new ArraySegment<byte>(buffer, 0, buffer.Length);
             client.SendAsync(segment, SocketFlags.None);
+                    }
+                    client.EndConnect(result);
+
+                }, client);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
+
     }
 }

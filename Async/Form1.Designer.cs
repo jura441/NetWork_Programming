@@ -76,6 +76,7 @@
             this.btn_disconnectServer.TabIndex = 3;
             this.btn_disconnectServer.Text = "Отключится от сервера";
             this.btn_disconnectServer.UseVisualStyleBackColor = true;
+            this.btn_disconnectServer.Click += new System.EventHandler(this.btn_disconnectServer_Click);
             // 
             // rtb_Chat
             // 
