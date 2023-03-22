@@ -13,13 +13,14 @@ namespace Async
             InitializeComponent();
         }
 
-       private void btn_connectServer(object sender, EventArgs e)
+        private void btn_connectServer(object sender, EventArgs e)
         {
             try
             {
                 client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
                 point = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 80);
-                client.BeginConnect(point, (IAsyncResult result) => {
+                client.BeginConnect(point, (IAsyncResult result) =>
+                {
                     Socket clientAsync = (Socket)result.AsyncState;
                     if (clientAsync.Connected)
                     {
@@ -35,8 +36,8 @@ namespace Async
 
                 }, client);
 
-             }
-            catch(Exception ex) 
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -44,7 +45,7 @@ namespace Async
         }
         private void btn_disconnectServer_Click(object sender, EventArgs e)
         {
-            if(client != null)
+            if (client != null)
             {
                 client.Shutdown(SocketShutdown.Both);
                 client.Close();
@@ -61,13 +62,14 @@ namespace Async
             {
                 client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
                 point = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 80);
-                client.BeginConnect(point, (IAsyncResult result) => {
+                client.BeginConnect(point, (IAsyncResult result) =>
+                {
                     Socket clientAsync = (Socket)result.AsyncState;
                     if (clientAsync.Connected)
                     {
                         byte[] buffer = Encoding.UTF8.GetBytes(textBox1.Text);
-            ArraySegment<byte> segment = new ArraySegment<byte>(buffer, 0, buffer.Length);
-            client.SendAsync(segment, SocketFlags.None);
+                        ArraySegment<byte> segment = new ArraySegment<byte>(buffer, 0, buffer.Length);
+                        client.SendAsync(segment, SocketFlags.None);
                     }
                     client.EndConnect(result);
 

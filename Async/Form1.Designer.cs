@@ -28,88 +28,87 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.dtn_connectserver = new System.Windows.Forms.Button();
-            this.btn_sendMessage = new System.Windows.Forms.Button();
-            this.btn_SwitchContact = new System.Windows.Forms.Button();
-            this.btn_disconnectServer = new System.Windows.Forms.Button();
-            this.rtb_Chat = new System.Windows.Forms.RichTextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.tmr_refreshConnection = new System.Windows.Forms.Timer(this.components);
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            dtn_connectserver = new Button();
+            btn_sendMessage = new Button();
+            btn_SwitchContact = new Button();
+            btn_disconnectServer = new Button();
+            rtb_Chat = new RichTextBox();
+            textBox1 = new TextBox();
+            tmr_refreshConnection = new System.Windows.Forms.Timer(components);
+            SuspendLayout();
             // 
             // dtn_connectserver
             // 
-            this.dtn_connectserver.Location = new System.Drawing.Point(12, 12);
-            this.dtn_connectserver.Name = "dtn_connectserver";
-            this.dtn_connectserver.Size = new System.Drawing.Size(161, 23);
-            this.dtn_connectserver.TabIndex = 0;
-            this.dtn_connectserver.Text = "Подключится к серверу";
-            this.dtn_connectserver.UseVisualStyleBackColor = true;
-            this.dtn_connectserver.Click += new System.EventHandler(this.btn_connectServer);
+            dtn_connectserver.Location = new Point(43, 12);
+            dtn_connectserver.Name = "dtn_connectserver";
+            dtn_connectserver.Size = new Size(161, 23);
+            dtn_connectserver.TabIndex = 0;
+            dtn_connectserver.Text = "Подключится к серверу";
+            dtn_connectserver.UseVisualStyleBackColor = true;
+            dtn_connectserver.Click += btn_connectServer;
             // 
             // btn_sendMessage
             // 
-            this.btn_sendMessage.Location = new System.Drawing.Point(434, 12);
-            this.btn_sendMessage.Name = "btn_sendMessage";
-            this.btn_sendMessage.Size = new System.Drawing.Size(147, 23);
-            this.btn_sendMessage.TabIndex = 1;
-            this.btn_sendMessage.Text = "отправить сообщение";
-            this.btn_sendMessage.UseVisualStyleBackColor = true;
-            this.btn_sendMessage.Click += new System.EventHandler(this.btn_sendMessage_Click);
+            btn_sendMessage.Location = new Point(434, 12);
+            btn_sendMessage.Name = "btn_sendMessage";
+            btn_sendMessage.Size = new Size(147, 23);
+            btn_sendMessage.TabIndex = 1;
+            btn_sendMessage.Text = "отправить сообщение";
+            btn_sendMessage.UseVisualStyleBackColor = true;
+            btn_sendMessage.Click += btn_sendMessage_Click;
             // 
             // btn_SwitchContact
             // 
-            this.btn_SwitchContact.Location = new System.Drawing.Point(247, 12);
-            this.btn_SwitchContact.Name = "btn_SwitchContact";
-            this.btn_SwitchContact.Size = new System.Drawing.Size(170, 23);
-            this.btn_SwitchContact.TabIndex = 2;
-            this.btn_SwitchContact.Text = "Выбрать собеседника";
-            this.btn_SwitchContact.UseVisualStyleBackColor = true;
-            this.btn_SwitchContact.Click += new System.EventHandler(this.btn_SwitchContact_Click);
+            btn_SwitchContact.Location = new Point(247, 12);
+            btn_SwitchContact.Name = "btn_SwitchContact";
+            btn_SwitchContact.Size = new Size(170, 23);
+            btn_SwitchContact.TabIndex = 2;
+            btn_SwitchContact.Text = "Выбрать собеседника";
+            btn_SwitchContact.UseVisualStyleBackColor = true;
+            btn_SwitchContact.Click += btn_SwitchContact_Click;
             // 
             // btn_disconnectServer
             // 
-            this.btn_disconnectServer.Location = new System.Drawing.Point(631, 12);
-            this.btn_disconnectServer.Name = "btn_disconnectServer";
-            this.btn_disconnectServer.Size = new System.Drawing.Size(157, 23);
-            this.btn_disconnectServer.TabIndex = 3;
-            this.btn_disconnectServer.Text = "Отключится от сервера";
-            this.btn_disconnectServer.UseVisualStyleBackColor = true;
-            this.btn_disconnectServer.Click += new System.EventHandler(this.btn_disconnectServer_Click);
+            btn_disconnectServer.Location = new Point(631, 12);
+            btn_disconnectServer.Name = "btn_disconnectServer";
+            btn_disconnectServer.Size = new Size(157, 23);
+            btn_disconnectServer.TabIndex = 3;
+            btn_disconnectServer.Text = "Отключится от сервера";
+            btn_disconnectServer.UseVisualStyleBackColor = true;
+            btn_disconnectServer.Click += btn_disconnectServer_Click;
             // 
             // rtb_Chat
             // 
-            this.rtb_Chat.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.rtb_Chat.Location = new System.Drawing.Point(0, 98);
-            this.rtb_Chat.Name = "rtb_Chat";
-            this.rtb_Chat.Size = new System.Drawing.Size(800, 352);
-            this.rtb_Chat.TabIndex = 4;
-            this.rtb_Chat.Text = "";
+            rtb_Chat.Dock = DockStyle.Bottom;
+            rtb_Chat.Location = new Point(0, 98);
+            rtb_Chat.Name = "rtb_Chat";
+            rtb_Chat.Size = new Size(800, 352);
+            rtb_Chat.TabIndex = 4;
+            rtb_Chat.Text = "";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 53);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(776, 23);
-            this.textBox1.TabIndex = 5;
+            textBox1.Location = new Point(12, 53);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(776, 23);
+            textBox1.TabIndex = 5;
             // 
             // Клиент
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.rtb_Chat);
-            this.Controls.Add(this.btn_disconnectServer);
-            this.Controls.Add(this.btn_SwitchContact);
-            this.Controls.Add(this.btn_sendMessage);
-            this.Controls.Add(this.dtn_connectserver);
-            this.Name = "Клиент";
-            this.Text = "Клиент";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(textBox1);
+            Controls.Add(rtb_Chat);
+            Controls.Add(btn_disconnectServer);
+            Controls.Add(btn_SwitchContact);
+            Controls.Add(btn_sendMessage);
+            Controls.Add(dtn_connectserver);
+            Name = "Клиент";
+            Text = "Клиент";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
